@@ -3,6 +3,7 @@ import './font-awesome/css/font-awesome.min.css';
 import { styled } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/header/header';
+import { Footer } from './components/foter';
 
 const Content = styled.div`
 	padding: 120px 0;
@@ -22,11 +23,7 @@ const AppColumn = styled.div`
 	background-color: white;
 `;
 
-const Footer = () => <footer>Футур</footer>;
-
 export const Blog = () => {
-	const currentYear = new Date().getFullYear();
-
 	return (
 		<AppColumn>
 			<Header />
@@ -42,7 +39,6 @@ export const Blog = () => {
 					<Route path="/*" element={<div>Ошибка</div>} />
 				</Routes>
 			</Content>
-			<div className="time">{currentYear}</div>
 			<Footer />
 		</AppColumn>
 	);
