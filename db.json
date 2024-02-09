@@ -1,0 +1,41 @@
+{
+	"users": [
+		{
+		"id": "01",
+		"login" : "G", 
+		"password": "123",
+		"registredAt": "2025-02-09",
+		"role_id": 0
+	}
+	],
+	"roles" : [{
+		"id": 0,
+		"name": "Администратор"
+	},
+	{
+		"id": 1,
+		"name": "Модератор"
+	},
+	{
+		"id": 2,
+		"name": "Читатель"
+	},
+	{
+		"id": 3,
+		"name": "Гость"
+	}
+],
+	"posts": [{
+		"id" : 0,
+		"title": "asda",
+		"image_url": "",
+		"content": "gagdca1111",
+		"published_at": "2026-04-13"
+	}],
+	"comments": [{
+		"id": 0,
+		"author_id": 0,
+		"post_id": 0,
+		"content": "cxvbngfdd sadasd asdaqwe1"
+	}]
+}
