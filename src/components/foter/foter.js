@@ -1,47 +1,25 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-const apiKey = '877275f47a715269c315819b86ef6f4a';
-async function getWeatherInMoscow(apiKey) {
-	const lat = 55.7558; // Широта Москвы
-	const lon = 37.6173; // Долгота Москвы
-	const part = 'minutely'; // Тип данных для исключения
-	const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&lang=ru&exclude=${part}&appid=${apiKey}`;
-
-	try {
-		const response = await fetch(apiUrl);
-		if (!response.ok) {
-			throw new Error('Failed to fetch weather data: ' + response.statusText);
-		}
-		const data = await response.json();
-		return data;
-	} catch (error) {
-		console.error(error);
-		return null;
-	}
-}
+import { getWeather } from '../utils';
 
 const FooterContainer = ({ className }) => {
 	const [city, setCity] = useState('Москва');
 	const [temperature, setTemperature] = useState('-5');
-	const [wether, setWether] = useState('облачно');
-	// Пример использования функции
+	const [wether, setWeather] = useState('облачно');
 
 	useEffect(() => {
-		getWeatherInMoscow(apiKey)
+		getWeather('Moscow', 'ru')
 			.then((data) => {
 				if (data) {
-					const { name, main, wether } = data;
+					const { name, main, weather } = data;
 					setCity(name);
 					setTemperature(Math.round(main.temp));
-					setWether(wether[0].description);
-					console.log('Погода в Москве:', data.weather[0].description);
-					console.log('Температура воздуха:', data.main.temp + '°C');
+					setWeather(weather[0].description);
 				} else {
 					console.log('Не удалось получить данные о погоде в Москве.');
 				}
 			})
-			.catch((error) => console.error('Ошибка:', error));
+			.catch((error) => console.error('Ошибка получения данных о погоде', error));
 	}, []);
 
 	const currentYear = new Date().toLocaleString('ru', {
@@ -59,7 +37,7 @@ const FooterContainer = ({ className }) => {
 					{city}, {currentYear}
 				</div>
 				<div>
-					{temperature} градусов, {wether}
+					{temperature}°C, {wether}
 				</div>
 			</div>
 		</footer>
