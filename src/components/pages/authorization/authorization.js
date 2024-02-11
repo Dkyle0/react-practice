@@ -1,13 +1,17 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../../../bff/server';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useStore, useSelector } from 'react-redux';
 import { Input } from '../../input/input';
 import { Button } from '../../button/button';
 import { H2 } from '../../h2';
+import { setUser } from '../../../actions/';
 import styled from 'styled-components';
+import { selectUserRole } from '../../../selectors';
+import { ROLE } from '../../../bff/constants';
 
 const authFormSchema = yup.object().shape({
 	login: yup
@@ -30,6 +34,7 @@ const authFormSchema = yup.object().shape({
 const AuthorizationContainer = ({ className }) => {
 	const {
 		register,
+		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
@@ -41,17 +46,39 @@ const AuthorizationContainer = ({ className }) => {
 	});
 
 	const [serverError, setServerError] = useState(null);
+	const store = useStore();
+	const dispatch = useDispatch();
+	const roleId = useSelector(selectUserRole);
+
+	useEffect(() => {
+		let currentLogout = store.getState().app.wasLogout;
+		return store.subscribe(() => {
+			let prevLogout = currentLogout;
+			currentLogout = store.getState().app.wasLogout;
+
+			if (prevLogout !== currentLogout) {
+				reset();
+			}
+		});
+	}, [reset, store]);
 
 	const onSubmit = ({ login, password }) => {
 		server.authorize(login, password).then(({ error, res }) => {
 			if (error) {
-				setServerError(`Ошибка запросв ${error}`);
+				setServerError(`Ошибка запроса. ${error}`);
+				return;
 			}
+
+			dispatch(setUser(res));
 		});
 	};
 
 	const formError = errors?.login?.message || errors?.password?.message;
 	const errorMessage = formError || serverError;
+
+	if (roleId !== ROLE.GUEST) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<div className={className}>
