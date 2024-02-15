@@ -4,45 +4,38 @@
       "id": "01",
       "login": "G01",
       "password": "123456",
-      "registredAt": "2025-02-09",
+      "registred_at": "2025-02-09",
       "role_id": 0
     },
     {
       "id": "3c15",
-      "login": "qqq",
-      "password": "qqqqqq",
-      "registredAt": "2056-02-21 15:42",
-      "role_id": 2
-    },
-    {
-      "id": "79f1",
       "login": "www",
       "password": "wwwwww",
-      "registredAt": "2058-10-03 19:39",
+      "registred_at": "2056-02-21 15:42",
       "role_id": 2
     }
   ],
   "roles": [
     {
-      "id": 0,
+      "id": "0",
       "name": "Администратор"
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Модератор"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Читатель"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Гость"
     }
   ],
   "posts": [
     {
-      "id": 0,
+      "id": "0",
       "title": "asda",
       "image_url": "",
       "content": "gagdca1111",
@@ -51,7 +44,7 @@
   ],
   "comments": [
     {
-      "id": 0,
+      "id": "0",
       "author_id": 0,
       "post_id": 0,
       "content": "cxvbngfdd sadasd asdaqwe1"
