@@ -8,6 +8,7 @@ import { Authorization, Registration, Users } from './components/pages/';
 import { Post } from './components/pages/post/post';
 import { useDispatch } from 'react-redux';
 import { setUser } from './actions';
+import { Modal } from './components/modal/modal';
 
 const Page = styled.div`
 	padding: 120px 0 20px;
@@ -58,6 +59,7 @@ export const Blog = () => {
 				</Routes>
 			</Page>
 			<Footer />
+			<Modal />
 		</AppColumn>
 	);
 };

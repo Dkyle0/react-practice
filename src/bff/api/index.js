@@ -6,6 +6,7 @@ export * from './get-post';
 export * from './set-user-role';
 export * from './delete-user';
 export * from './delete-session';
+export * from './delete-comment';
 export * from './add-comment';
 export * from './get-comments';
 export * from './add-session';
