@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { server } from '../../../bff/server';
+import { server } from '../../../bff/';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '../../input/input';
@@ -11,7 +11,7 @@ import { H2 } from '../../h2';
 import { setUser } from '../../../actions/';
 import styled from 'styled-components';
 import { selectUserRole } from '../../../selectors';
-import { ROLE } from '../../../bff/constants';
+import { ROLE } from '../../../constants';
 import { AuthFormError } from '../../auth-form-error/auth-form-error';
 import { useResetForm } from '../../../hooks';
 
@@ -66,6 +66,7 @@ const RegistrationContainer = ({ className }) => {
 			}
 
 			dispatch(setUser(res));
+			sessionStorage.setItem('userData', JSON.stringify(res));
 		});
 	};
 
