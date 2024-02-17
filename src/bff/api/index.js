@@ -3,6 +3,7 @@ export * from './get-user';
 export * from './get-users';
 export * from './get-roles';
 export * from './get-post';
+export * from './update-post';
 export * from './set-user-role';
 export * from './delete-user';
 export * from './delete-session';
