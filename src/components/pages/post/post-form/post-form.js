@@ -2,46 +2,64 @@ import styled from 'styled-components';
 import { Input } from '../../../input/input';
 import { SpecialPanel } from '../components/components/special-panel';
 import { Icon } from '../../../Icon';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { sanitizeContent } from './utils/sanitize-content';
 import { useDispatch } from 'react-redux';
 import { savePostAsync } from '../../../../actions';
 import { useNavigate } from 'react-router-dom';
 import { useServerRequest } from '../../../../hooks';
 
-const EditButton = () => <Icon id="fa-floppy-o" margin="0 10px 0 0" size="21px" />;
+const EditButton = () => <Icon id="fa-floppy-o" margin="0 0 0 10px" size="21px" />;
 
 const PostFormContainer = ({
 	className,
 	post: { id, title, imageUrl, content, publishedAt },
 }) => {
-	const imageRef = useRef(null);
-	const titleRef = useRef(null);
+	const [imageField, setImageField] = useState(imageUrl);
+	const [titleField, setTitleField] = useState(title);
 	const contentRef = useRef(null);
+
+	useLayoutEffect(() => {
+		setImageField(imageUrl);
+		setTitleField(title);
+	}, [imageUrl, title]);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const requestServer = useServerRequest();
 
+	const onImageChange = ({ target }) => setImageField(target.value);
+	const onTitleChange = ({ target }) => setTitleField(target.value);
+
 	const onSave = () => {
-		const newImage = imageRef.current.value;
-		const newTitle = titleRef.current.value;
 		const newContent = sanitizeContent(contentRef.current.innerHTML);
+
 		dispatch(
 			savePostAsync(requestServer, {
 				id,
-				imageUrl: newImage,
-				title: newTitle,
+				imageUrl: imageField,
+				title: titleField,
 				content: newContent,
 			}),
-		).then(() => {
+		).then(({ id }) => {
 			navigate(`/post/${id}`);
 		});
 	};
+
 	return (
 		<div className={className}>
-			<Input ref={imageRef} defaultValue={imageUrl} placeholder="Изображение..." />
-			<Input ref={titleRef} defaultValue={title} placeholder="Заголовок..." />
+			<Input
+				value={imageField}
+				placeholder="Изображение..."
+				onChange={onImageChange}
+			/>
+			<Input
+				value={titleField}
+				placeholder="Заголовок..."
+				onChange={onTitleChange}
+			/>
 			<SpecialPanel
+				id={id}
 				publishedAt={publishedAt}
 				margin="20px 0"
 				EditButton={EditButton}
@@ -62,6 +80,8 @@ const PostFormContainer = ({
 
 export const PostForm = styled(PostFormContainer)`
 	& .post-text {
+		min-height: 80px;
+		border: 1px solid black;
 		font-size: 18px;
 		white-space: pre-line;
 	}

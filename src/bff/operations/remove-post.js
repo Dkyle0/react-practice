@@ -1,8 +1,8 @@
-import { addPost, updatePost } from '../api';
+import { deleteComment, deletePost, getComments } from '../api';
 import { BFF_ROLE } from '../constants/bff-role';
 import { sessions } from '../sessions';
 
-export const savePost = async (hash, newPostData) => {
+export const removePost = async (hash, id) => {
 	const accessRoles = [BFF_ROLE.ADMIN];
 
 	const access = await sessions.access(hash, accessRoles);
@@ -14,13 +14,13 @@ export const savePost = async (hash, newPostData) => {
 		};
 	}
 
-	const sevedPost =
-		newPostData.id === ''
-			? await addPost(newPostData)
-			: await updatePost(newPostData);
+	await deletePost(id);
+
+	const comments = await getComments(id);
+	await Promise.all(comments.map(({ id: commentId }) => deleteComment(commentId)));
 
 	return {
 		error: null,
-		res: sevedPost,
+		res: true,
 	};
 };

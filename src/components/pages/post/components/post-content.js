@@ -4,7 +4,9 @@ import { SpecialPanel } from './components/special-panel';
 import { Icon } from '../../../Icon';
 import { useNavigate } from 'react-router-dom';
 
-const EditButton = () => <Icon id="fa-pencil-square-o" margin="0 10px 0 0" size="21px" />;
+const EditButton = () => (
+	<Icon id="fa-pencil-square-o" margin="5px 0 0 10px" size="21px" />
+);
 
 const PostContentContainer = ({
 	className,
@@ -17,6 +19,7 @@ const PostContentContainer = ({
 			<img src={imageUrl} alt={title} />
 			<H2>{title}</H2>
 			<SpecialPanel
+				id={id}
 				publishedAt={publishedAt}
 				margin="-20px 0 20px"
 				EditButton={EditButton}
