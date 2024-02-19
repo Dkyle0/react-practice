@@ -90,9 +90,11 @@ const AuthorizationContainer = ({ className }) => {
 					Авторизации
 				</Button>
 				{errorMessage && <AuthFormError>{errorMessage}</AuthFormError>}
-				<Button>
-					<Link to="/register">Регистрация</Link>
-				</Button>
+				<div className="registration">
+					<Button>
+						<Link to="/register">Регистрация</Link>
+					</Button>
+				</div>
 			</form>
 		</div>
 	);
@@ -103,6 +105,10 @@ export const Authorization = styled(AuthorizationContainer)`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+
+	& .registration {
+		margin-top: 10px;
+	}
 
 	& > form {
 		display: flex;
