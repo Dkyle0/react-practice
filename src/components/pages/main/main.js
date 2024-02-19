@@ -9,6 +9,7 @@ import { debounce } from '../../utils';
 const MainContainer = ({ className }) => {
 	const [posts, setPosts] = useState([]);
 	const [page, setPage] = useState(1);
+	const [isLoading, setisLoading] = useState(true);
 	const [lastPage, setLastPage] = useState(1);
 	const [shouldSearch, setShouldSearch] = useState(false);
 	const [searchPhrase, setSearchPhrase] = useState('');
@@ -20,6 +21,7 @@ const MainContainer = ({ className }) => {
 			(getedPosts) => {
 				setPosts(getedPosts.res);
 				setLastPage(getedPosts.res[0] ? getedPosts.res[0]?.lastPage : undefined);
+				setisLoading(false);
 			},
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,6 +34,10 @@ const MainContainer = ({ className }) => {
 		startDelayedSearch(!shouldSearch);
 		setPage(1);
 	};
+
+	if (isLoading) {
+		return null;
+	}
 
 	return (
 		<div className={className}>

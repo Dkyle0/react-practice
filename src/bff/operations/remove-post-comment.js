@@ -1,6 +1,7 @@
-import { deleteComment, getComments, getPost } from '../api';
+import { deleteComment, getPost } from '../api';
 import { BFF_ROLE } from '../constants/bff-role';
 import { sessions } from '../sessions';
+import { getPostCommentsWithAuthor } from '../utils';
 
 export const removePostComment = async (hash, postId, id) => {
 	const accessRoles = [BFF_ROLE.ADMIN, BFF_ROLE.MODDERATOR];
@@ -17,13 +18,13 @@ export const removePostComment = async (hash, postId, id) => {
 	await deleteComment(id);
 
 	const post = await getPost(postId);
-	const comments = await getComments(postId);
+	const commentsWithAuthor = await getPostCommentsWithAuthor(postId);
 
 	return {
 		error: null,
 		res: {
 			...post,
-			comments,
+			comments: commentsWithAuthor,
 		},
 	};
 };

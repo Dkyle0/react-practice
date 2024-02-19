@@ -1,6 +1,7 @@
-import { addComment, getComments, getPost } from '../api';
+import { addComment, getPost } from '../api';
 import { BFF_ROLE } from '../constants/bff-role';
 import { sessions } from '../sessions';
+import { getPostCommentsWithAuthor } from '../utils';
 
 export const addPostComment = async (hash, postId, userId, content) => {
 	const accessRoles = [BFF_ROLE.ADMIN, BFF_ROLE.MODDERATOR, BFF_ROLE.READER];
@@ -17,13 +18,13 @@ export const addPostComment = async (hash, postId, userId, content) => {
 	await addComment(postId, userId, content);
 
 	const post = await getPost(postId);
-	const comments = await getComments(postId);
+	const commentsWithAuthor = await getPostCommentsWithAuthor(postId);
 
 	return {
 		error: null,
 		res: {
 			...post,
-			comments,
+			comments: commentsWithAuthor,
 		},
 	};
 };
