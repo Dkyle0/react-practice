@@ -3,6 +3,7 @@ import { H2 } from '../../../h2';
 import { SpecialPanel } from './components/special-panel';
 import { Icon } from '../../../Icon';
 import { useNavigate } from 'react-router-dom';
+import { PROP_TYPE } from '../../../../constants';
 
 const EditButton = () => (
 	<Icon id="fa-pencil-square-o" margin="5px 0 0 10px" size="21px" />
@@ -43,3 +44,7 @@ export const PostContent = styled(PostContentContainer)`
 		white-space: pre-line;
 	}
 `;
+
+PostContent.propTypes = {
+	post: PROP_TYPE.POST,
+};

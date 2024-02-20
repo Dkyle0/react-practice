@@ -6,6 +6,7 @@ import { useServerRequest } from '../../../../../hooks';
 import { checkAccess } from '../../../../utils';
 import { ROLE } from '../../../../../constants';
 import { selectUserRole } from '../../../../../selectors';
+import PropTypes from 'prop-types';
 
 const CommentContainer = ({ className, id, author, content, publishedAt, postId }) => {
 	const dispatch = useDispatch();
@@ -89,3 +90,11 @@ export const Comment = styled(CommentContainer)`
 		margin: 10px;
 	}
 `;
+
+Comment.propTypes = {
+	id: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired,
+	content: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	postId: PropTypes.string.isRequired,
+};
