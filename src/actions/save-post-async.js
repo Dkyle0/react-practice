@@ -1,8 +1,14 @@
+import { request } from '../components/utils';
 import { setPostDataAsync } from './set-post-data';
 
-export const savePostAsync = (requestServer, newPostData) => (dispatch) =>
-	requestServer('savePost', newPostData).then((updatedPost) => {
-		dispatch(setPostDataAsync(updatedPost.res));
+export const savePostAsync = (id, newPostData) => (dispatch) => {
+	const seveRequest = id
+		? request(`/posts/${id}`, 'PATCH', newPostData)
+		: request('/posts', 'POST', newPostData);
 
-		return updatedPost.res;
+	return seveRequest.then((updatedPost) => {
+		dispatch(setPostDataAsync(updatedPost.data));
+
+		return updatedPost.data;
 	});
+};

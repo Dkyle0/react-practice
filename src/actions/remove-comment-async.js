@@ -1,7 +1,8 @@
-import { setPostDataAsync } from './set-post-data';
+import { request } from '../components/utils';
+import { removeComment } from './remove-comment';
 
-export const removeCommentAsync = (requestServer, postId, id) => (dispatch) => {
-	requestServer('removePostComment', postId, id).then((postData) => {
-		dispatch(setPostDataAsync(postData.res));
+export const removeCommentAsync = (postId, id) => (dispatch) => {
+	request(`/posts/${postId}/comments/${id}`, 'DELETE').then(() => {
+		dispatch(removeComment(id));
 	});
 };

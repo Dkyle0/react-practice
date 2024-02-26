@@ -4,7 +4,7 @@ import { ROLE } from './role';
 export const PROP_TYPE = {
 	ROLE_ID: PropTypes.oneOf(Object.values(ROLE)),
 	ROLE: PropTypes.shape({
-		id: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 	}),
 	ERROR: PropTypes.oneOfType([PropTypes.string, PropTypes.exact(null)]),

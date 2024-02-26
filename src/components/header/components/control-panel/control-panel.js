@@ -4,11 +4,7 @@ import { Icon } from '../../../Icon';
 import { Button } from '../../../button/button';
 import { ROLE } from '../../../../constants/role';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	selectUserRole,
-	selectUserLogin,
-	selectUserSession,
-} from '../../../../selectors';
+import { selectUserRole, selectUserLogin } from '../../../../selectors';
 import { logout } from '../../../../actions';
 import { checkAccess } from '../../../utils';
 
@@ -23,12 +19,11 @@ const RightAligned = styled.div`
 const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectUserRole);
 	const login = useSelector(selectUserLogin);
-	const session = useSelector(selectUserSession);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const onLogout = () => {
-		dispatch(logout(session));
+		dispatch(logout());
 		sessionStorage.removeItem('userData');
 	};
 

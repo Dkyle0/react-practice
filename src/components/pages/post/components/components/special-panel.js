@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Icon } from '../../../../Icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_MODAL, openModal, removePostAsync } from '../../../../../actions';
-import { useServerRequest } from '../../../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { checkAccess } from '../../../../utils';
 import { ROLE } from '../../../../../constants';
@@ -11,7 +10,6 @@ import PropTypes from 'prop-types';
 
 const SpecialPanelContainer = ({ className, id, publishedAt, EditButton, onEdit }) => {
 	const dispatch = useDispatch();
-	const requestServer = useServerRequest();
 	const navigate = useNavigate();
 	const userRole = useSelector(selectUserRole);
 
@@ -20,7 +18,7 @@ const SpecialPanelContainer = ({ className, id, publishedAt, EditButton, onEdit 
 			openModal({
 				text: 'Удалить статью?',
 				onConfirm: () => {
-					dispatch(removePostAsync(requestServer, id)).then(() => {
+					dispatch(removePostAsync(id)).then(() => {
 						navigate('/');
 					});
 					dispatch(CLOSE_MODAL);
